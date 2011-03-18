@@ -1,9 +1,6 @@
-require 'rubygems'
-require 'bundler/setup'
-
-require 'active_support/core_ext'
-
 $: << File.expand_path('../', __FILE__)
+
+require File.expand_path('../../vendor/active_support.rb', __FILE__)
 
 module Cuttlebone
   require               'cuttlebone/exceptions'
@@ -12,7 +9,7 @@ module Cuttlebone
   autoload :Session,    'cuttlebone/session'
 
   @@definitions = []
-  mattr_reader :definitions
+  def self.definitions; @@definitions; end
 
   def self.run starting_objects, default_driver=Session::Shell
     default_driver.new(starting_objects).run

@@ -1,9 +1,6 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
-require 'rubygems'
-require 'bundler/setup'
-
 require File.expand_path('../../lib/cuttlebone', __FILE__)
 
 ##
