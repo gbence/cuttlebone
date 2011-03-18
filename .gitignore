@@ -1,0 +1,6 @@
+.rvmrc
+.bundle
+.autotest
+Gemfile.lock
+coverage/
+pkg/
