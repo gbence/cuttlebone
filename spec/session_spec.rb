@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Cuttlebone::Session::Base do
+describe Cuttlebone::Session do
   let(:valid_context) { 'x' }
   let(:valid_command) { 'y' }
 
@@ -16,12 +16,12 @@ describe Cuttlebone::Session::Base do
   end
 
   context "having an active 'x' context" do
-    subject { Cuttlebone::Session::Base.new(valid_context) }
+    subject { Cuttlebone::Session.new(valid_context) }
 
     it { should_not be_terminated }
 
     it "should have no internal error" do
-      subject.internal_error.should be_blank
+      subject.internal_error.should be_nil
     end
 
     it "should evaluate a string command" do
@@ -43,20 +43,20 @@ describe Cuttlebone::Session::Base do
   end
 
   context "having no active contexts" do
-    subject { Cuttlebone::Session::Base.new() }
+    subject { Cuttlebone::Session.new() }
 
     it "should have no internal error" do
-      subject.internal_error.should be_blank
+      subject.internal_error.should be_nil
     end
 
     it { should be_terminated }
   end
 
   context "having 1 context" do
-    subject { Cuttlebone::Session::Base.new(valid_context) }
+    subject { Cuttlebone::Session.new(valid_context) }
 
     it "should have no internal error" do
-      subject.internal_error.should be_blank
+      subject.internal_error.should be_nil
     end
 
     it { should_not be_terminated }
@@ -69,10 +69,11 @@ describe Cuttlebone::Session::Base do
   end
 
   context "given a wrong context" do
-    subject { Cuttlebone::Session::Base.new('invalid_context') }
+    subject { Cuttlebone::Session.new('invalid_context') }
 
     it "should indicate internal error" do
-      subject.internal_error.should_not be_blank
+      subject.internal_error.should_not be_nil
+      subject.internal_error.should_not be_empty
     end
 
     it "should be terminated" do

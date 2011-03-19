@@ -17,7 +17,7 @@ Given /^a started "([^"]*)" session$/ do |objects|
 end
 
 When /^I start (?:an? )?"([^"]*)" session$/ do |objects|
-  @d = Cuttlebone::Session::Test.new(*(objects.scan(/([^,]{1,})(?:,\s*)?/).flatten))
+  @d = Cuttlebone::Drivers::Test.new(*(objects.scan(/([^,]{1,})(?:,\s*)?/).flatten))
 end
 
 # invocation
@@ -71,6 +71,7 @@ Then /^I should see an error$/ do
 end
 
 Then /^I should get an error$/ do
-  @d.internal_error.should_not be_blank
+  @d.internal_error.should_not be_nil
+  @d.internal_error.should_not be_empty
 end
 
