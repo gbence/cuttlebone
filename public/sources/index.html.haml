@@ -1,0 +1,16 @@
+- def ts(path); @ts ||= Time.now.strftime('%s'); %{#{path}?#{@ts}}; end
+!!!
+%html
+  %head
+    %title Cuttlebone
+    %link{ :type => 'image/png', :href => ts('/favicon.png'), :rel => 'icon' }
+    %link{ :type => 'text/css', :href => ts('/stylesheets/cuttlebone.css'), :rel => 'stylesheet' }
+    %script{ :type => 'text/javascript', :src => ts('/javascripts/jquery.min.js') }
+    %script{ :type => 'text/javascript', :src => ts('/javascripts/cuttlebone.js') }
+  %body
+    %div.output
+      %ul
+    %div.input
+      %span#prompt
+      %span &gt;
+      %input#input{ :type => 'text', :name => 'command' }

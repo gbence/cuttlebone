@@ -15,6 +15,8 @@ describe Cuttlebone::Session do
     Cuttlebone.stub!(:definitions).and_return([ valid_context_definition ])
   end
 
+  it { should respond_to(:id) }
+
   context "having an active 'x' context" do
     subject { Cuttlebone::Session.new(valid_context) }
 

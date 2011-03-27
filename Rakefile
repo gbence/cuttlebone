@@ -9,10 +9,41 @@ require 'cucumber/rake/task'
 require 'rake/packagetask'
 require 'rake/gempackagetask'
 
+begin
+  require 'haml'
+  require 'sass'
+rescue LoadError
+end
+
 CUTTLEBONE_GEMSPEC = eval(File.read(File.expand_path('../cuttlebone.gemspec', __FILE__)))
 
 desc 'Default: run specs'
 task :default => 'spec'
+
+if defined?(Haml) and defined?(Sass)
+  task :gem => 'rack:compile'
+
+  namespace :rack do
+    desc 'Compiles HTML/CSS files.'
+    task :compile do
+      {
+        'index.html.haml' => 'index.html',
+        'error.html.haml' => 'error.html',
+        'cuttlebone.sass' => 'stylesheets/cuttlebone.css'
+      }.each_pair do |f,t|
+        File.open(File.expand_path("../public/#{t}", __FILE__), 'w') do |tt|
+          tt.write(
+            (
+              f =~ /\.haml$/ ?
+              Haml::Engine.new(File.read(File.expand_path("../public/sources/#{f}",__FILE__)), :format => :html5, :ugly => true) :
+              Sass::Engine.new(File.read(File.expand_path("../public/sources/#{f}",__FILE__)))
+          ).render()
+          )
+        end
+      end
+    end
+  end
+end
 
 namespace :spec do
   desc 'Run all specs in spec directory (format=progress)'

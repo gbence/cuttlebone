@@ -1,6 +1,7 @@
 .rvmrc
 .bundle
 .autotest
+.*.swp
 Gemfile.lock
 coverage/
 pkg/

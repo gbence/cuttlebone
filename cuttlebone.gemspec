@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "i18n"
   s.add_development_dependency "cucumber", "~> 0.10.0"
   s.add_development_dependency "rcov",     "~> 0.9.0"
+  s.add_development_dependency "capybara", "~> 0.4.0"
+  s.add_development_dependency "haml",     "~> 3.0.0"
 
   s.files            = `git ls-files`.split("\n")
   s.executables      = `git ls-files`.split("\n").select{|f| f =~ /^bin/}

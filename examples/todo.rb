@@ -53,5 +53,5 @@ context Task do
 end
 
 at_exit do
-  Cuttlebone.run([Task.new(:title => 'x'), Task.new(:title => 'y')])
+  Cuttlebone.run([Task.new(:title => 'x'), Task.new(:title => 'y')], Cuttlebone::Drivers::Rack)
 end

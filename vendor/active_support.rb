@@ -54,3 +54,21 @@ class Module
     end
   end
 end
+
+# (active_support)/lib/active_support/core_ext/array/extract_options.rb (stripped)
+class Hash
+  def extractable_options?
+    instance_of?(Hash)
+  end
+end
+
+class Array
+  def extract_options!
+    if last.is_a?(Hash) && last.extractable_options?
+      pop
+    else
+      {}
+    end
+  end
+end
+

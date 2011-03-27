@@ -1,0 +1,14 @@
+- timestamp ||= Time.now.strftime('%s')
+!!!
+%html
+  %head
+    %title Cuttlebone - Error
+    %link{ :type => 'text/css', :href => "/stylesheets/cuttlebone.css?#{timestamp}", :rel => 'stylesheet' }
+  %body
+    %div.output
+      %ul
+        %li.error Error happens.  It always does.
+    %div.actions
+      %ul
+        %li
+          %a{ :href => '/' } back to console

@@ -3,12 +3,13 @@ require 'readline'
 
 class Cuttlebone::Drivers::Shell < Cuttlebone::Drivers::Base
   def run
+    session = Cuttlebone::Session.sessions.create
     loop do
-      break if @session.terminated?
-      command = Readline::readline("#{@session.prompt} > ")
+      break if session.terminated?
+      command = Readline::readline("#{session.prompt} > ")
       break unless command
       Readline::HISTORY.push(command)
-      _, _, output, error = @session.call(command)
+      _, _, output, error = session.call(command)
       print (output<<'').join("\n")
       print "\033[01;31m#{error}\033[00m\n" if error
     end

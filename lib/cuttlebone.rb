@@ -7,7 +7,12 @@ module Cuttlebone
   autoload :Controller, 'cuttlebone/controller'
   autoload :Definition, 'cuttlebone/definition'
   autoload :Session,    'cuttlebone/session'
-  autoload :Drivers,     'cuttlebone/drivers'
+
+  module Drivers
+    autoload :Base,  'cuttlebone/drivers/base'
+    autoload :Shell, 'cuttlebone/drivers/shell'
+    autoload :Rack,  'cuttlebone/drivers/rack'
+  end
 
   @@definitions = []
   def self.definitions; @@definitions; end
