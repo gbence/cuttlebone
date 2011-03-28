@@ -1,14 +1,15 @@
-- timestamp ||= Time.now.strftime('%s')
+- def ts(path); @ts ||= Time.now.strftime('%s'); %{#{path}?#{@ts}}; end
 !!!
 %html
   %head
     %title Cuttlebone - Error
-    %link{ :type => 'text/css', :href => "/stylesheets/cuttlebone.css?#{timestamp}", :rel => 'stylesheet' }
+    %link{ :type => 'image/png', :href => ts('/favicon.png'), :rel => 'icon' }
+    %link{ :type => 'text/css', :href => ts('/stylesheets/cuttlebone.css'), :rel => 'stylesheet', :media => 'screen' }
   %body
-    %div.output
-      %ul
-        %li.error Error happens.  It always does.
     %div.actions
       %ul
         %li
           %a{ :href => '/' } back to console
+    %div.output
+      %ul
+        %li.error Error happens.  It always does.

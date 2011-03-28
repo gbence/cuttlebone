@@ -1,2 +1,40 @@
+* {
+  font-family: monospace;
+  margin: 0;
+  padding: 0; }
+
 body {
-  font-family: "sans serif"; }
+  width: 900px;
+  margin: 0 auto;
+  padding: 5px 0 0 0; }
+
+.actions ul li {
+  list-style-type: none;
+  padding: 2px 3px; }
+
+.input {
+  background: #dddddd;
+  width: 100%;
+  border-left: 1px solid #aaaaaa;
+  border-right: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa; }
+  .input span {
+    padding: 2px 3px; }
+  .input input {
+    border: 0;
+    padding: 2px 3px;
+    background: #dddddd; }
+
+.output {
+  background: white;
+  width: 100%;
+  border-top: 1px solid #aaaaaa;
+  border-left: 1px solid #aaaaaa;
+  border-right: 1px solid #aaaaaa; }
+  .output ul li {
+    list-style-type: none;
+    padding: 2px 3px;
+    border-bottom: 1px solid #aaaaaa; }
+
+.error {
+  background: #ff8888; }

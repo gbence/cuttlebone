@@ -20,45 +20,51 @@ class Cuttlebone::Drivers::Rack < Cuttlebone::Drivers::Base
     end
 
     def call env
-      @request  = Rack::Request.new(env)
+      request = Rack::Request.new(env)
 
-      return(@app.call(env)) unless @request.post?
-      return(@app.call(env)) unless @request.path =~ %r{^/(?:(?:prompt|call)/([0-9a-f]{40}))|init$}
+      return(@app.call(env)) unless request.post?
+      return(@app.call(env)) unless request.path =~ %r{^/(?:(?:prompt|call)/([0-9a-f]{40}))|init$}
       # return(@app.call(env)) unless @request.is_json_request?
 
-      @response = Rack::Response.new
-      @response['Content-Type'] = 'application/json'
+      response = Rack::Response.new
+      response['Content-Type'] = 'application/json'
 
-      if @request.path == '/init'
-        session = @driver.sessions.create
-        json 'id' => session.id, 'prompt' => session.prompt
-      elsif @request.path =~ %r{/prompt/([0-9a-f]{40})}
-        id      = $1
-        session = @driver.sessions[id]
-        json 'id' => session.id, 'prompt' => session.prompt
-      elsif @request.path =~ %r{/call/([0-9a-f]{40})}
-        id      = $1
-        session = @driver.sessions[id]
+      results = { 'id' => nil, 'prompt' => nil }
 
-        if command=@request.params['command']
-          _, _, output, error = session.call(command.force_encoding("UTF-8"))
-          json 'id' => session.id, 'prompt' => session.prompt, 'output' => output, 'error' => error
-        else
-          @response.status = 409
-          json 'id' => session.id, 'prompt' => session.prompt, 'error' => 'No command was given!'
+      begin
+        session = get_session_for(request.path)
+        raise ArgumentError, "Cannot load cuttlebone-session!" unless session
+
+        case request.path
+        when '/init', %r{^/prompt/}
+          results.merge! 'id' => session.id, 'prompt' => session.prompt
+        when %r{^/call/}
+          if command=request.params['command']
+            _, _, output, error = session.call(command.force_encoding("UTF-8"))
+            results.merge! 'id' => session.id, 'prompt' => session.prompt, 'output' => output, 'error' => error
+          else
+            response.status = 409
+            results.merge! 'id' => session.id, 'prompt' => session.prompt, 'error' => 'No command was given!'
+          end
         end
+      rescue
+        results.merge! 'id' => (session.id rescue nil), 'prompt' => (session.prompt rescue nil), 'error' => $!.message
       end
 
-      return(@response.finish)
-    rescue
-      json 'id' => (session.id rescue nil), 'prompt' => (session.prompt rescue nil), 'error' => $!.message
-      return(@response.finish)
+      response.write(results.to_json)
+
+      return(response.finish)
     end
 
     private
 
-    def json data
-      @response.write(data.to_json)
+    def get_session_for path
+      case path
+      when '/init'
+        @driver.sessions.create
+      when %r{^/(?:prompt|call)/([0-9a-f]{40})$}
+        @driver.sessions[$1]
+      end
     end
   end
 
@@ -78,33 +84,24 @@ class Cuttlebone::Drivers::Rack < Cuttlebone::Drivers::Base
     end
 
     def call(env)
-      @request  = Rack::Request.new(env)
-      @response = Rack::Response.new
+      request  = Rack::Request.new(env)
+      response = Rack::Response.new
 
-      if @request.get? and @request.path == '/'
-        redirect_to '/index.html'
-      elsif @request.get? and STATIC_FILES.include?(@request.path)
-        static @request.path
+      if request.get? and request.path == '/'
+        response.redirect('/index.html')
+      elsif request.get? and STATIC_FILES.include?(request.path)
+        response['Content-Type'] = 'application/javascript' if request.path =~ /\.js$/
+        response['Content-Type'] = 'text/css' if request.path =~ /\.css$/
+        response['Content-Type'] = 'image/png' if request.path =~ /\.png$/
+
+        response.write(File.read(File.expand_path("../../../../public#{request.path}", __FILE__)))
+        response.status = 200
       else
-        error 'Not found.', 404
+        response.write(File.read(File.expand_path("../../../../public/error.html", __FILE__)).gsub(/Error happens.  It always does./, 'Not found.'))
+        response.status = 404
       end
 
-      @response.finish
-    end
-
-    private
-
-    def static path
-      @response.write(File.read(File.expand_path("../../../../public#{path}", __FILE__)))
-    end
-
-    def error message, status=500
-      @response.write(File.read(File.expand_path("../../../../public/error.html", __FILE__)).gsub(/Error happens.  It always does./, message))
-      @response.status = status
-    end
-
-    def redirect_to path
-      @response.redirect(path)
+      response.finish
     end
   end
 

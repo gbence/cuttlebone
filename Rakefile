@@ -37,7 +37,7 @@ if defined?(Haml) and defined?(Sass)
               f =~ /\.haml$/ ?
               Haml::Engine.new(File.read(File.expand_path("../public/sources/#{f}",__FILE__)), :format => :html5, :ugly => true) :
               Sass::Engine.new(File.read(File.expand_path("../public/sources/#{f}",__FILE__)))
-          ).render()
+            ).render()
           )
         end
       end
@@ -72,10 +72,10 @@ desc 'Run all cucumber tests.'
 Cucumber::Rake::Task.new do |t|
 end
 
-desc 'Generate documentation for the a4-core plugin.'
+desc 'Generate documentation for cuttlebone.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'A4::Core'
+  rdoc.title    = 'Cuttlebone'
   rdoc.options << '--line-numbers' << '--inline-source' << '--charset=UTF-8'
   rdoc.rdoc_files.include('README')
   rdoc.rdoc_files.include('lib/**/*.rb')

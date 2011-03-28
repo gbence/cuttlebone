@@ -11,7 +11,11 @@ Gem::Specification.new do |s|
   s.description = "Cuttlebone helps you creating shell-alike applications."
 
   s.rubyforge_project         = "cuttlebone"
+  #s.required_ruby_version     = ">= 1.9.2"
   s.required_rubygems_version = ">= 1.3.7"
+
+  s.add_runtime_dependency     "rack",     "~> 1.2.2"
+  s.add_runtime_dependency     "json",     "~> 1.5.0"
 
   s.add_development_dependency "bundler",  "~> 1.0.0"
   s.add_development_dependency "rspec",    "~> 2.5.0"

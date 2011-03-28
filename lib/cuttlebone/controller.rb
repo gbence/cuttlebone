@@ -50,8 +50,8 @@ class Cuttlebone::Controller
     __save_next_action! :replace, context
   end
 
-  def output text
-    @output << text
+  def output *texts
+    @output += texts.map(&:to_s)
   end
 
   def method_missing method_name, *args, &block

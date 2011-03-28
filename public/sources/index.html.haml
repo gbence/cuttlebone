@@ -4,13 +4,13 @@
   %head
     %title Cuttlebone
     %link{ :type => 'image/png', :href => ts('/favicon.png'), :rel => 'icon' }
-    %link{ :type => 'text/css', :href => ts('/stylesheets/cuttlebone.css'), :rel => 'stylesheet' }
+    %link{ :type => 'text/css', :href => ts('/stylesheets/cuttlebone.css'), :rel => 'stylesheet', :media => 'screen' }
     %script{ :type => 'text/javascript', :src => ts('/javascripts/jquery.min.js') }
     %script{ :type => 'text/javascript', :src => ts('/javascripts/cuttlebone.js') }
   %body
     %div.output
       %ul
     %div.input
-      %span#prompt
-      %span &gt;
+      %span#prompt>
+      %span> &gt;
       %input#input{ :type => 'text', :name => 'command' }
