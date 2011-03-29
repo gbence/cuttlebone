@@ -1,6 +1,4 @@
 require 'rack'
-require 'haml'
-require 'sass/plugin/rack'
 require 'json'
 
 class Cuttlebone::Drivers::Rack < Cuttlebone::Drivers::Base

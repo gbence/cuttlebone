@@ -12,6 +12,7 @@ module Cuttlebone
     autoload :Base,  'cuttlebone/drivers/base'
     autoload :Shell, 'cuttlebone/drivers/shell'
     autoload :Rack,  'cuttlebone/drivers/rack'
+    autoload :XMPP,  'cuttlebone/drivers/xmpp'
   end
 
   @@definitions = []

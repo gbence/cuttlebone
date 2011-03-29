@@ -1,4 +1,13 @@
-## 0.1.2 / 2011-03-18
+## 0.1.5 / 2011-03-29
+
+* Added some new CSS and JS to improve user experience.
+* Added XMPP driver (without tests).
+
+## 0.1.4 / 2011-03-27
+
+* Added Rack driver and its supporting files.
+
+## 0.1.2-0.1.3 / 2011-03-18
 
 * Changed directory structure to look like a real gem. :)
 * Finalized initial test cases (spec/cucumber).
