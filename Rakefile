@@ -1,13 +1,11 @@
 require 'rubygems'
-require 'bundler/setup'
-
 require 'rake'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'rspec/core/rake_task'
 require 'cucumber/rake/task'
+require 'rubygems/package_task'
 
-require 'rake/packagetask'
-require 'rake/gempackagetask'
+#require 'rake/packagetask'
 
 begin
   require 'haml'
@@ -57,13 +55,6 @@ namespace :spec do
     t.pattern = './spec/**/*_spec.rb'
     t.rspec_opts = ['--color', '--format=documentation']
   end
-
-  desc "Run specs with rcov"
-  RSpec::Core::RakeTask.new(:rcov) do |t|
-    t.pattern = './spec/**/*_spec.rb'
-    t.rcov = true
-    t.rcov_opts = ['--exclude', 'gems/,spec/,features/']
-  end
 end
 
 task :spec => 'spec:progress'
@@ -73,7 +64,7 @@ Cucumber::Rake::Task.new do |t|
 end
 
 desc 'Generate documentation for cuttlebone.'
-Rake::RDocTask.new(:rdoc) do |rdoc|
+RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'Cuttlebone'
   rdoc.options << '--line-numbers' << '--inline-source' << '--charset=UTF-8'
@@ -81,6 +72,6 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-Rake::GemPackageTask.new(CUTTLEBONE_GEMSPEC) do |p|
+Gem::PackageTask.new(CUTTLEBONE_GEMSPEC) do |p|
   p.gem_spec = CUTTLEBONE_GEMSPEC
 end

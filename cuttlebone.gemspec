@@ -19,11 +19,11 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency     "xmpp4r",   "~> 0.5"
 
   s.add_development_dependency "bundler",  "~> 1.0.0"
-  s.add_development_dependency "rspec",    "~> 2.5.0"
+  s.add_development_dependency "rspec",    "~> 2.6.0"
   s.add_development_dependency "i18n"
-  s.add_development_dependency "cucumber", "~> 0.10.0"
-  s.add_development_dependency "rcov",     "~> 0.9.0"
-  s.add_development_dependency "capybara", "~> 0.4.0"
+  s.add_development_dependency "cucumber", "~> 1.0.0"
+  s.add_development_dependency "simplecov","~> 0.4.0"
+  s.add_development_dependency "capybara", "~> 1.0.0"
   s.add_development_dependency "haml",     "~> 3.0.0"
 
   s.files            = `git ls-files`.split("\n")

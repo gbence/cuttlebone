@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require File.expand_path('../../../lib/cuttlebone.rb', __FILE__)
 require 'cucumber/formatter/unicode'
 
